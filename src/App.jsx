@@ -3,7 +3,7 @@ import {
   ShoppingBag, Search, Menu, X, Instagram, 
   Twitter, Facebook, MessageCircle, ArrowRight, 
   Star, ShieldCheck, Truck, RotateCcw, Filter,
-  ChevronDown, ExternalLink, Plus, Heart
+  ChevronDown, ExternalLink, Plus, Heart, ArrowUp
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
