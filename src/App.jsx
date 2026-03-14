@@ -19,9 +19,56 @@ const PRODUCTS = [
 
 const WHATSAPP_NUMBER = "+50940000000"; // Replace with real number
 
-// --- Components ---
+const CustomCursor = () => {
+  const dotRef = useRef(null);
+  const outlineRef = useRef(null);
+  useEffect(() => {
+    const moveCursor = (e) => {
+      if (dotRef.current) {
+        dotRef.current.style.left = `${e.clientX}px`;
+        dotRef.current.style.top = `${e.clientY}px`;
+      }
+      if (outlineRef.current) {
+        outlineRef.current.style.left = `${e.clientX}px`;
+        outlineRef.current.style.top = `${e.clientY}px`;
+        outlineRef.current.style.transform = `translate(-50%, -50%)`;
+      }
+    };
+    window.addEventListener('mousemove', moveCursor);
+    return () => window.removeEventListener('mousemove', moveCursor);
+  }, []);
+  return (
+    <>
+      <div ref={dotRef} className="fixed w-2 h-2 bg-primary rounded-full pointer-events-none z-[9999] hidden lg:block" style={{ transform: 'translate(-50%, -50%)' }} />
+      <div ref={outlineRef} className="fixed w-10 h-10 border border-primary/30 rounded-full pointer-events-none z-[9998] transition-transform duration-100 hidden lg:block" />
+    </>
+  );
+};
 
-const Navbar = () => (
+const ScrollToTop = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => {
+    const toggleVisibility = () => setIsVisible(window.pageYOffset > 500);
+    window.addEventListener('scroll', toggleVisibility);
+    return () => window.removeEventListener('scroll', toggleVisibility);
+  }, []);
+
+  return (
+    <AnimatePresence>
+      {isVisible && (
+        <motion.button
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.5 }}
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="fixed bottom-10 right-10 z-[100] w-14 h-14 bg-primary text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
+        >
+          <ArrowUp size={24} />
+        </motion.button>
+      )}
+    </AnimatePresence>
+  );
+};
   <nav className="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 py-4 px-6 md:px-12">
     <div className="max-w-7xl mx-auto flex justify-between items-center">
       <div className="text-2xl font-black tracking-tighter text-secondary">
