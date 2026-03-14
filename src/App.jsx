@@ -17,9 +17,9 @@ const PRODUCTS = [
   { id: 6, name: "Classic Noir Wallet", price: 65, category: "Fashion", img: "https://images.pexels.com/photos/4452533/pexels-photo-4452533.jpeg?auto=compress&cs=tinysrgb&w=600" },
 ];
 
-const WHATSAPP_NUMBER = "+50940000000"; // Replace with real number
+const WHATSAPP_NUMBER = "+50940000000"; 
 
-// --- Components ---
+// --- Shared Components ---
 
 const CustomCursor = () => {
   const dotRef = useRef(null);
@@ -229,9 +229,9 @@ const ProductCatalog = () => (
 
 const TrustFeatures = () => {
   const features = [
-    { title: "Secure Order", desc: "Order directly through WhatsApp with a verified human agent.", icon: <ShieldCheck /> },
-    { title: "Local Delivery", desc: "Fast and reliable shipping across Port-au-Prince and beyond.", icon: <Truck /> },
-    { title: "Satisfaction", desc: "We guarantee the quality of every single item we deliver.", icon: <RotateCcw /> }
+    { title: "Secure Order", desc: "Order directly through WhatsApp with a verified human agent.", icon: <ShieldCheck size={36} /> },
+    { title: "Local Delivery", desc: "Fast and reliable shipping across Port-au-Prince and beyond.", icon: <Truck size={36} /> },
+    { title: "Satisfaction", desc: "We guarantee the quality of every single item we deliver.", icon: <RotateCcw size={36} /> }
   ];
 
   return (
@@ -240,7 +240,7 @@ const TrustFeatures = () => {
         {features.map((f, i) => (
           <div key={i} className="flex flex-col items-center text-center">
             <div className="w-20 h-20 rounded-3xl bg-white flex items-center justify-center text-primary mb-8 shadow-xl">
-               {React.cloneElement(f.icon, { size: 36 })}
+               {f.icon}
             </div>
             <h4 className="text-2xl font-black text-secondary mb-4 uppercase tracking-tight">{f.title}</h4>
             <p className="text-slate-500 font-light leading-relaxed">{f.desc}</p>
