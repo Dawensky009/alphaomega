@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   ShoppingBag, Search, Menu, X, Instagram, 
   Twitter, Facebook, MessageCircle, ArrowRight, 
@@ -19,10 +19,15 @@ const PRODUCTS = [
 
 const WHATSAPP_NUMBER = "+50940000000"; // Replace with real number
 
+// --- Components ---
+
 const CustomCursor = () => {
   const dotRef = useRef(null);
   const outlineRef = useRef(null);
   useEffect(() => {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (isMobile) return;
+
     const moveCursor = (e) => {
       if (dotRef.current) {
         dotRef.current.style.left = `${e.clientX}px`;
@@ -37,6 +42,7 @@ const CustomCursor = () => {
     window.addEventListener('mousemove', moveCursor);
     return () => window.removeEventListener('mousemove', moveCursor);
   }, []);
+
   return (
     <>
       <div ref={dotRef} className="fixed w-2 h-2 bg-primary rounded-full pointer-events-none z-[9999] hidden lg:block" style={{ transform: 'translate(-50%, -50%)' }} />
@@ -69,6 +75,8 @@ const ScrollToTop = () => {
     </AnimatePresence>
   );
 };
+
+const Navbar = () => (
   <nav className="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 py-4 px-6 md:px-12">
     <div className="max-w-7xl mx-auto flex justify-between items-center">
       <div className="text-2xl font-black tracking-tighter text-secondary">
