@@ -46,8 +46,8 @@ const CustomCursor = () => {
 
   return (
     <>
-      <div ref={dotRef} className="fixed w-2 h-2 bg-primary rounded-full pointer-events-none z-[9999] hidden lg:block" style={{ transform: 'translate(-50%, -50%)' }} />
-      <div ref={outlineRef} className="fixed w-10 h-10 border border-primary/30 rounded-full pointer-events-none z-[9998] transition-transform duration-100 hidden lg:block" />
+      <div ref={dotRef} className="cursor-dot hidden lg:block" style={{ position: 'fixed', width: '8px', height: '8px', backgroundColor: '#10B981', borderRadius: '50%', pointerEvents: 'none', zIndex: 9999, transform: 'translate(-50%, -50%)' }} />
+      <div ref={outlineRef} className="cursor-outline hidden lg:block" style={{ position: 'fixed', width: '35px', height: '35px', border: '1px solid rgba(16, 185, 129, 0.3)', borderRadius: '50%', pointerEvents: 'none', zIndex: 9998, transition: 'transform 0.1s ease-out' }} />
     </>
   );
 };
@@ -80,18 +80,40 @@ const ScrollToTop = () => {
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const navLinks = [
+    { name: "New Arrivals", href: "#home" },
+    { name: "Catalog", href: "#shop" },
+    { name: "Categories", href: "#shop" },
+    { name: "About", href: "#about" }
+  ];
+
+  const handleLinkClick = (href) => {
+    setIsOpen(false);
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <nav className="fixed w-full z-[90] bg-white/80 backdrop-blur-xl border-b border-slate-100 py-3 md:py-4 px-4 md:px-12">
+    <nav className="fixed w-full z-[100] bg-white/80 backdrop-blur-xl border-b border-slate-100 py-3 md:py-4 px-4 md:px-12">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <div className="text-xl md:text-2xl font-black tracking-tighter text-secondary">
+        <a href="#home" onClick={(e) => { e.preventDefault(); handleLinkClick("#home"); }} className="text-xl md:text-2xl font-black tracking-tighter text-secondary">
           ALPHA<span className="text-primary">OMEGA</span>
-        </div>
+        </a>
         
         {/* Desktop Menu */}
         <div className="hidden lg:flex space-x-10 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">
-          <a href="#home" className="hover:text-primary transition-colors">New Arrivals</a>
-          <a href="#shop" className="hover:text-primary transition-colors">Catalog</a>
-          <a href="#shop" className="hover:text-primary transition-colors">Categories</a>
+          {navLinks.map((link) => (
+            <a 
+              key={link.name} 
+              href={link.href} 
+              onClick={(e) => { e.preventDefault(); handleLinkClick(link.href); }}
+              className="hover:text-primary transition-colors"
+            >
+              {link.name}
+            </a>
+          ))}
         </div>
 
         <div className="flex items-center space-x-4 md:space-x-6">
@@ -100,7 +122,7 @@ const Navbar = () => {
              <button className="bg-primary text-white w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center shadow-lg shadow-primary/20 transition-transform hover:scale-110"><ShoppingBag size={18} md:size={20} /></button>
              <span className="absolute -top-1 -right-1 bg-secondary text-white text-[8px] font-black w-4 h-4 rounded-full flex items-center justify-center">0</span>
           </div>
-          <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden text-secondary">
+          <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden text-secondary z-[110]">
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
@@ -110,15 +132,29 @@ const Navbar = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-white border-t border-slate-100 overflow-hidden"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="absolute top-0 left-0 w-full min-h-screen bg-white z-[105] flex flex-col items-center justify-center lg:hidden"
           >
-            <div className="flex flex-col p-6 space-y-4 text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">
-               <a href="#home" onClick={() => setIsOpen(false)} className="hover:text-primary py-2">New Arrivals</a>
-               <a href="#shop" onClick={() => setIsOpen(false)} className="hover:text-primary py-2">Catalog</a>
-               <a href="#shop" onClick={() => setIsOpen(false)} className="hover:text-primary py-2">Categories</a>
+            <div className="flex flex-col items-center space-y-8 text-center">
+               {navLinks.map((link) => (
+                 <a 
+                   key={link.name} 
+                   href={link.href} 
+                   onClick={(e) => { e.preventDefault(); handleLinkClick(link.href); }}
+                   className="text-2xl font-black text-secondary uppercase tracking-[0.2em] hover:text-primary transition-all"
+                 >
+                   {link.name}
+                 </a>
+               ))}
+               <a 
+                 href="#contact" 
+                 onClick={(e) => { e.preventDefault(); handleLinkClick("#shop"); }}
+                 className="bg-primary text-white font-black py-4 px-12 rounded-2xl text-sm uppercase tracking-widest shadow-xl"
+               >
+                 Inquiry Now
+               </a>
             </div>
           </motion.div>
         )}
@@ -182,7 +218,7 @@ const Hero = () => {
         </div>
 
         {/* Product Showcase */}
-        <div className="lg:col-span-8 relative h-[400px] sm:h-[500px] md:h-[800px] flex items-center order-1 lg:order-2">
+        <div className="lg:col-span-8 relative h-[350px] sm:h-[500px] md:h-[800px] flex items-center order-1 lg:order-2">
            <AnimatePresence mode="wait">
              <motion.div 
                key={activeBanner}
@@ -312,12 +348,12 @@ const TrustFeatures = () => {
   ];
 
   return (
-    <section className="py-20 md:py-32 px-4 md:px-12 bg-slate-50 border-y border-slate-100">
+    <section id="about" className="py-20 md:py-32 px-4 md:px-12 bg-slate-50 border-y border-slate-100">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
         {features.map((f, i) => (
           <div key={i} className="flex flex-col items-center text-center group">
             <div className="w-20 h-20 md:w-24 md:h-24 rounded-[30px] md:rounded-[40px] bg-white flex items-center justify-center text-primary mb-6 md:mb-8 shadow-xl transition-transform group-hover:scale-110">
-               {React.cloneElement(f.icon, { size: 32, md: 40 })}
+               {React.cloneElement(f.icon, { size: 32 })}
             </div>
             <h4 className="text-xl md:text-2xl font-black text-secondary mb-3 md:mb-4 uppercase tracking-tight italic">{f.title}</h4>
             <p className="text-slate-500 font-light leading-relaxed text-sm max-w-[250px]">{f.desc}</p>
@@ -346,9 +382,9 @@ const Footer = () => (
         <div>
           <h5 className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] mb-8 md:mb-12 text-slate-500">Collection</h5>
           <ul className="space-y-4 md:space-y-6 text-white text-xs md:text-sm font-bold uppercase tracking-widest">
-            <li><a href="#" className="hover:text-primary transition-all">New Arrivals</a></li>
-            <li><a href="#" className="hover:text-primary transition-all">Best Sellers</a></li>
-            <li><a href="#" className="hover:text-primary transition-all">Limited Edition</a></li>
+            <li><a href="#home">New Arrivals</a></li>
+            <li><a href="#shop">Best Sellers</a></li>
+            <li><a href="#shop">Limited Edition</a></li>
           </ul>
         </div>
         <div className="hidden sm:block">
