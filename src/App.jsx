@@ -139,7 +139,7 @@ const Hero = () => {
                    <div className="bg-white/10 backdrop-blur-xl p-6 md:p-8 rounded-2xl md:rounded-3xl border border-white/20 w-full md:w-auto">
                       <p className="text-[8px] md:text-[10px] font-black text-[#10B981] uppercase tracking-widest mb-1 md:mb-2">{banners[activeBanner].subtitle}</p>
                       <h3 className="text-xl md:text-5xl font-black text-white tracking-tighter uppercase mb-3 md:mb-4">{banners[activeBanner].title}</h3>
-                      <div className="flex items-center space-x-4"> <span className="text-xl md:text-2xl font-bold text-white">{banners[activeBanner].price}</span> <span className="text-[#10B981] font-black text-[8px] md:text-[10px] uppercase tracking-widest flex items-center gap-1"><Eye size={12} md:size={14} /> Details</span> </div>
+                      <div className="flex items-center space-x-4"> <span className="text-[#10B981] font-black text-[8px] md:text-[10px] uppercase tracking-widest flex items-center gap-1"><Eye size={12} md:size={14} /> Details</span> </div>
                    </div>
                    <div className="flex space-x-2 md:space-x-4"> <button onClick={() => setActiveBanner((prev) => (prev + 1) % banners.length)} className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-white text-slate-900 flex items-center justify-center shadow-xl hover:bg-[#10B981] hover:text-white transition-all"> <ChevronRight size={24} /> </button> </div>
                 </div>
@@ -152,7 +152,7 @@ const Hero = () => {
 };
 
 const ProductCard = ({ product }) => {
-  const message = encodeURIComponent(`Hello AlphaOmega! I want to order: *${product.name}* ($${product.price}). Is it available?`);
+  const message = encodeURIComponent(`Hello AlphaOmega! I want to order: *${product.name}*. Is it available?`);
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
   return (
     <motion.div whileHover={{ y: -10 }} className="bg-white rounded-[30px] md:rounded-[40px] overflow-hidden product-shadow transition-all group" >
@@ -165,7 +165,7 @@ const ProductCard = ({ product }) => {
         </div>
       </div>
       <div className="p-6 md:p-8">
-        <div className="flex justify-between items-start mb-2 md:mb-4"> <h4 className="text-lg md:text-xl font-black text-slate-900 tracking-tight uppercase line-clamp-1">{product.name}</h4> <span className="text-lg md:text-xl font-bold text-[#10B981]">${product.price}</span> </div>
+        <div className="flex justify-between items-start mb-2 md:mb-4"> <h4 className="text-lg md:text-xl font-black text-slate-900 tracking-tight uppercase line-clamp-1">{product.name}</h4> </div>
         <div className="flex items-center space-x-1 mb-4 md:mb-6 text-yellow-400"> {[...Array(5)].map((_, i) => <Star key={i} size={12} fill="currentColor" />)} <span className="text-slate-400 text-[8px] md:text-[10px] ml-2 font-black uppercase tracking-widest italic">Authentic</span> </div>
         <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="w-full py-3 md:py-4 rounded-xl md:rounded-2xl border border-slate-100 font-bold text-[8px] md:text-[10px] text-slate-900 flex items-center justify-center hover:bg-[#10B981] hover:text-white hover:border-[#10B981] transition-all uppercase tracking-[0.2em]" > Check Availability </a>
       </div>
