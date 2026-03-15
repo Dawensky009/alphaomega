@@ -33,7 +33,7 @@ const PRODUCTS = [
   { id: 21, name: "Luxe Fashion Item 3", price: 140, category: "Fashion", img: "/products/WhatsApp Image 2026-03-14 at 7.11.48 PM.jpeg" },
 ];
 
-const WHATSAPP_NUMBER = "+50940000000"; 
+const WHATSAPP_NUMBER = "15613182408"; 
 
 // --- Shared Components ---
 
